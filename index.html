@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Tracker & Burger Menu</title>
+    <style>
+       
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+       
+        nav {
+            display: none; 
+            flex-direction: column;
+            gap: 10px;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-active {
+            display: flex;
+        }
+
+        .buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .btn-burger, .btn-x {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .current {
+            display: none; 
+        }
+
+       
+        .container {
+            background: white;
+            padding: 20px;
+            width: 320px;
+            margin: 60px auto;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+
+        input {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 90%;
+        }
+
+        .calc-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: cadetblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .bmi-result {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-menu">
+        <h2>Home</h2>
+        <h2>Contacts</h2>
+        <h2>About</h2>
+        <h2>Location</h2>
+    </nav>
+
+    <div class="buttons">
+        <button class="btn-burger">
+            <img src="https://img.icons8.com/sf-regular/1200/menu.jpg" width="40" height="30" />
+        </button>
+        <button class="btn-x current">x</button>
+    </div>
+
+    <div class="container">
+        <h1>Health Calculator</h1>
+        
+        <p>Enter Height (cm):</p>
+        <input type="number" class="height-input" placeholder="e.g. 175">
+        
+        <p>Enter Weight (kg):</p>
+        <input type="number" class="weight-input" placeholder="e.g. 70">
+        
+        <button class="calc-btn">Calculate BMI</button>
+        
+        <p class="bmi-result"></p>
+        <p class="advice-text"></p>
+    </div>
+
+    <script>
+        
+        const btnBurger = document.querySelector(".btn-burger");
+        const btnX = document.querySelector(".btn-x");
+        const nav = document.querySelector(".nav-menu");
+
+        btnBurger.addEventListener("click", function () {
+            btnBurger.classList.toggle("current"); 
+            btnX.classList.toggle("current");     
+            nav.classList.toggle("nav-active");  
+        });
+
+        btnX.addEventListener("click", function () {
+            btnBurger.classList.toggle("current"); 
+            btnX.classList.toggle("current");     
+            nav.classList.toggle("nav-active");   
+        });
+
+
+        
+        const heightInp = document.querySelector('.height-input');
+        const weightInp = document.querySelector('.weight-input');
+        const calcBtn = document.querySelector('.calc-btn');
+        const bmiP = document.querySelector('.bmi-result');
+        const adviceP = document.querySelector('.advice-text');
+
+        calcBtn.addEventListener('click', function() {
+            
+            if (heightInp.value.trim() === '' || weightInp.value.trim() === '') {
+                alert('Please enter a valid num');
+                return;
+            }
+
+            
+            const h = Number(heightInp.value) / 100; 
+            const w = Number(weightInp.value);
+            const bmi = (w / (h * h)).toFixed(1);
+
+            
+            bmiP.innerText = 'Your BMI: ' + bmi;
+
+            
+            if (bmi < 18.5) {
+                adviceP.innerText = 'Recommendation: Need more protein and muscles!';
+                adviceP.style.color = 'blue';
+            } else if (bmi >= 18.5 && bmi <= 25) {
+                adviceP.innerText = 'Recommendation: You are doing great!';
+                adviceP.style.color = 'green';
+            } else {
+                adviceP.innerText = 'Recommendation: Time for some cardio.';
+                adviceP.style.color = 'red';
+            }
+        });
+    </script>
+
+</body>
+</html>
